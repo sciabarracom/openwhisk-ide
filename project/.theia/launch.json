@@ -1,0 +1,16 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  "version": "0.2.0",
+  "configurations": [
+      {
+    "address": "172.17.0.6",
+    "localRoot": "${workspaceFolder}",
+    "name": "/guest/hellots",
+    "port": 8081,
+    "remoteRoot": "/app/action/1/bin",
+    "request": "attach",
+    "type": "node"
+}
+  ]
+}
