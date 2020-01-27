@@ -86,6 +86,7 @@ func traceOff() {
 
 func TestMain(m *testing.M) {
 	flag.Parse()
+	*DryRunFlag = true
 	log.SetOutput(os.Stderr)
 	log.SetFormatter(&log.TextFormatter{
 		DisableColors:    true,

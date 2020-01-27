@@ -1,5 +1,5 @@
 package main
 
-func dockerVersion() {
-	Sys("docker version")
+func dockerVersion() string {
+	return Sys("@docker version --format {{.Server.Version}}")
 }
