@@ -1,4 +1,4 @@
-module github.com/sciabarracom/openwhisk-ide/owide
+module github.com/sciabarracom/openwhisk-ide/wskide
 
 go 1.12
 

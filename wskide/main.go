@@ -1,8 +1,9 @@
-package main
+package wskide
 
 import "gopkg.in/alecthomas/kingpin.v2"
 
-func main() {
+// Main entrypoint for wskide
+func Main() {
 	cmd := kingpin.Parse()
 	if !(whiskParse(cmd) || ideParse(cmd)) {
 		kingpin.Usage()
