@@ -78,7 +78,7 @@ func DryRunPop(buf ...string) string {
 // If the command starts with "@" do not print the output.
 // It also honor the DryRunFlag, in this case it always print the command
 func Sys(cli string, args ...string) string {
-	a := strings.Split(cli, " ")
+	a := strings.Split(strings.ReplaceAll(cli, "\n", " "), " ")
 	params := args
 	if len(a) > 1 {
 		params = append(a[1:], args...)
