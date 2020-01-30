@@ -52,7 +52,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./openwhisk-ide
           asset_name: openwhisk-ide
-          asset_content_type: application/application/octet-stream
+          asset_content_type: application/octet-stream
 
       - name: Upload Windows Release Asset
         id: upload-release-asset-windows
@@ -63,7 +63,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./openwhisk-ide.exe
           asset_name: openwhisk-ide.exe
-          asset_content_type: application/application/octet-stream
+          asset_content_type: application/octet-stream
 
       - name: Upload macOS Release Asset
         id: upload-release-asset-macos
@@ -74,5 +74,5 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./openwhisk-ide+mac-Darwin
           asset_name: openwhisk-ide+mac-Darwin
-          asset_content_type: application/application/octet-stream
+          asset_content_type: application/octet-stream
 
