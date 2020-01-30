@@ -2,28 +2,60 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
-name: Create Release
+name: Upload Release Asset
 
 jobs:
   build:
-    name: Create Release
+    name: Upload Release Asset
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+
+      - name: Get dependencies and build ELF 64-bit LSB executable, x86-64
+        run: |
+          export GOOS=linux
+          go get -v -t -d ./...
+          go build -v -o openwhisk-ide .
+
+      - name: Get dependencies and build PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows
+        run: |
+          export GOOS=windows
+          go get -v -t -d ./...
+          go build -v -o openwhisk-ide.exe .
+
+      - name: Get dependencies and build Mach-O 64-bit x86_64 executable
+        run: |
+          export GOOS=darwin
+          go get -v -t -d ./...
+          go build -v -o openwhisk-ide+mac-Darwin .
+
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
           draft: false
           prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./openwhisk-ide
+          asset_name: openwhisk-ide
+          asset_content_type: application/application/octet-stream
+          asset_path: ./openwhisk-ide.exe
+          asset_name: openwhisk-ide.exe
+          asset_content_type: application/application/octet-stream
+          asset_path: ./openwhisk-ide+mac-Darwin
+          asset_name: openwhisk-ide+mac-Darwin
+          asset_content_type: application/application/octet-stream
