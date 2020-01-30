@@ -1,5 +1,9 @@
 package wskide
 
+import "fmt"
+
+import "strings"
+
 func dockerVersion() string {
 	return Sys("@docker version --format {{.Server.Version}}")
 }
@@ -19,13 +23,18 @@ func dockerRmOpenWhisk() string {
 	return Sys("docker exec openwhisk stop")
 }
 
-func dockerRunIde() string {
-	//--add-host openwhisk:$(docker inspect openwhisk | jq -r '.[0].NetworkSettings.IPAddress')
-	return Sys(`docker run -d -p 3000:3000
+func dockerRunIde() error {
+	openwhiskIP := Sys("docker inspect", "--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}", "openwhisk")
+	if strings.HasPrefix(openwhiskIP, "Error:") {
+		return fmt.Errorf("%s", openwhiskIP)
+	}
+	command := fmt.Sprintf(`docker run -d -p 3000:3000
 --rm --name ide-js
 -v /var/run/docker.sock:/var/run/docker.sock
 -v /${PWD}/project:/home/project
-actionloop/ide-js`)
+actionloop/ide-js --add-host %s`, openwhiskIP)
+	Sys(command)
+	return nil
 }
 
 func dockerRmIde() string {
