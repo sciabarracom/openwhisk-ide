@@ -26,8 +26,10 @@ func ideParse(cmd string) bool {
 
 func ideDeploy() {
 	fmt.Println("Deploying IDE")
+	dockerRunIde()
 }
 
 func ideDestroy() {
 	fmt.Println("Destroying IDE")
+	dockerRmIde()
 }

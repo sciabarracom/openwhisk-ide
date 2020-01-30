@@ -49,7 +49,7 @@ func Recover(perr *error) {
 
 // DryRunFlag allows for dry execution
 var DryRunFlag = kingpin.Flag("dry-run", "show commands instead of executing them").
-	Short('n').Default("true").Bool()
+	Short('n').Default("false").Bool()
 
 // buffer for dry run rusults
 var dryRunBuf = []string{}

@@ -1,7 +1,6 @@
 package wskide
 
 import "fmt"
-
 import "strings"
 
 func dockerVersion() string {
@@ -38,5 +37,5 @@ actionloop/ide-js --add-host %s`, openwhiskIP)
 }
 
 func dockerRmIde() string {
-	return Sys("docker exec ide-js stop")
+	return Sys("docker kill ide-js")
 }

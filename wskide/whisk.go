@@ -26,8 +26,10 @@ func whiskParse(cmd string) bool {
 
 func whiskDeploy() {
 	fmt.Println("Deploying Whisk")
+	dockerRunOpenWhisk()
 }
 
 func whiskDestroy() {
 	fmt.Println("Destroying Whisk")
+	dockerRmOpenWhisk()
 }

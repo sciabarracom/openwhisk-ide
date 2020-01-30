@@ -1,2 +1,3 @@
-openwskide.code-workspace
+openwhisk-ide.code-workspace
 openwhisk-ide
+*.bak
