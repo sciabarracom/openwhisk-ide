@@ -28,7 +28,7 @@ func ExampleDockerRmOpenWhisk() {
 
 func ExampleDockerRunIde() {
 	// *DryRunFlag = false
-	DryRunPush("172.17.0.2", "641792b3e0112c8fa1896b8944a846dbbab88fe5729f3d464e71475afd9e6057", "Error: patatine fritte")
+	DryRunPush("172.17.0.2", "641792b3e0112c8fa1896b8944a846dbbab88fe5729f3d464e71475afd9e6057", "Error:")
 	fmt.Println(dockerRunIde())
 	fmt.Println(dockerRunIde())
 	// Output:
@@ -36,7 +36,7 @@ func ExampleDockerRunIde() {
 	// docker run -d -p 3000:3000 --rm --name ide-js -v /var/run/docker.sock:/var/run/docker.sock -v /${PWD}/project:/home/project actionloop/ide-js --add-host 172.17.0.2
 	// <nil>
 	// docker inspect --format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} openwhisk
-	// Error: patatine fritte
+	// Error:
 }
 
 func ExampleDockerRmIde() {
@@ -44,7 +44,7 @@ func ExampleDockerRmIde() {
 	DryRunPush()
 	fmt.Println(dockerRmIde())
 	// Output:
-	// docker exec ide-js stop
+	// docker kill ide-js
 }
 
 func E_xamplePlayGround() {
