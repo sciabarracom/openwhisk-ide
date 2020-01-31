@@ -1,3 +1,4 @@
 openwhisk-ide.code-workspace
 openwhisk-ide
+go.sum
 *.bak
