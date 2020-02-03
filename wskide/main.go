@@ -50,7 +50,7 @@ func Main() {
 	if *VerboseFlag {
 		log.SetLevel(log.TraceLevel)
 	}
-	if !(whiskParse(cmd) || ideParse(cmd) || cmdParse(cmd)) {
+	if !(whiskParse(cmd) || ideParse(cmd) || debugParse(cmd)) {
 		kingpin.Usage()
 	}
 }

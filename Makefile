@@ -22,14 +22,27 @@ openwhisk:
 ide-base:
 	docker build -t actionloop/ide-js-base ide-js-base
 
+.PHONY: ide-poc
+ide-poc:
+	docker build -t actionloop/ide-js ide-js-poc
+
+OPENWHISK=#--add-host openwhisk:$(shell docker inspect openwhisk | jq -r '.[0].NetworkSettings.IPAddress')
+
 .PHONY: ide
 ide:
-	docker build -t actionloop/ide-js ide-js-poc
-	docker run -ti \
+	docker run -ti $(OPENWHISK)\
 	--rm --name ide-js \
 	-p 3000:3000 \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v $(PWD)/project:/home/project \
-	--add-host openwhisk:$(shell docker inspect openwhisk | jq -r '.[0].NetworkSettings.IPAddress') \
 	actionloop/ide-js
 
+.PHONY: wskide
+wskide: project/wskide
+
+project/wskide: wskide/*.go
+	GOOS=linux go build -o project/wskide
+
+stop:
+	-docker kill ide-js
+	docker exec openwhisk stop
