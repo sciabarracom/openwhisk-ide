@@ -15,7 +15,7 @@ var (
 	stopCmd     = kingpin.Command("stop", "Destroy deployment")
 )
 
-func cmdParse(cmd string) bool {
+func debugParse(cmd string) bool {
 	switch cmd {
 	case startCmd.FullCommand():
 		Start(*startDirArg)
