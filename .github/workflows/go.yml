@@ -37,3 +37,6 @@ jobs:
 
     - name: Build
       run: go build -v .
+
+    - name: Run Test
+      run: ./openwhisk-ide --verbose start project
