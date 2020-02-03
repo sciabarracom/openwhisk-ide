@@ -11,8 +11,8 @@ func ExampleDockerVersion() {
 	// 19.03.5
 }
 func ExampleDockerRunOpenWhisk() {
-	*DryRunFlag = false
-	//DryRunPush("991c7972fa4612c873b3804a4c334b3af66687a7f1e548a36dfdfe0c6a717cbe")
+	//*DryRunFlag = false
+	DryRunPush("991c7972fa4612c873b3804a4c334b3af66687a7f1e548a36dfdfe0c6a717cbe")
 	fmt.Println(dockerRunOpenWhisk())
 	// Output:
 	// docker run -d -p 3232:3232 -p 3233:3233 --rm --name openwhisk --hostname openwhisk -v /var/run/docker.sock:/var/run/docker.sock -e CONTAINER_EXTRA_ENV=__OW_DEBUG_PORT=8081 openwhisk/standalone:nightly

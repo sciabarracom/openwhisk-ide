@@ -1,10 +1,14 @@
 package wskide
 
+import (
+	"fmt"
+	"os"
+)
+
 func ExampleCompareDockerVersion() {
 	*DryRunFlag = false
 	compareDockerVersion()
 	// Output:
-	// La versione di docker installata 19.3.5 è supportata
 }
 func ExamplePassDockerVersion() {
 	// *DryRunFlag = false
@@ -12,7 +16,6 @@ func ExamplePassDockerVersion() {
 	compareDockerVersion()
 	// Output:
 	// docker version --format {{.Server.Version}}
-	// La versione di docker installata 19.3.5 è supportata
 }
 func ExampleFailDockerVersion() {
 	// *DryRunFlag = false
@@ -20,7 +23,7 @@ func ExampleFailDockerVersion() {
 	compareDockerVersion()
 	// Output:
 	// docker version --format {{.Server.Version}}
-	// La versione di docker 10.3.5 installata non è piu' supportata
+	// Installed docker version 10.3.5 is no longer supported
 }
 func ExampleEqualDockerVersion() {
 	// *DryRunFlag = false
@@ -28,5 +31,14 @@ func ExampleEqualDockerVersion() {
 	compareDockerVersion()
 	// Output:
 	// docker version --format {{.Server.Version}}
-	// La versione di docker installata 18.6.3-ce è supportata
+}
+
+func ExampleInHomePath() {
+	// *DryRunFlag = false
+	os.Setenv("HOME", "/tmp")
+	fmt.Println(inHomePath("/tmp/openwhisk-ide"))
+	fmt.Println(inHomePath("/var/run"))
+	// Output:
+	// <nil>
+	// Path /var/run is not subdir of homeDir /tmp
 }
