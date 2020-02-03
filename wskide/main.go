@@ -1,7 +1,9 @@
 package wskide
 
-import "gopkg.in/alecthomas/kingpin.v2"
-import log "github.com/sirupsen/logrus"
+import (
+	log "github.com/sirupsen/logrus"
+	"gopkg.in/alecthomas/kingpin.v2"
+)
 
 // VerboseFlag is flag for verbose
 var VerboseFlag = kingpin.Flag("verbose", "Verbose").
@@ -13,7 +15,7 @@ func Main() {
 	if *VerboseFlag {
 		log.SetLevel(log.TraceLevel)
 	}
-	if !(whiskParse(cmd) || ideParse(cmd)) {
+	if !(whiskParse(cmd) || ideParse(cmd) || debugParse(cmd)) {
 		kingpin.Usage()
 	}
 }
