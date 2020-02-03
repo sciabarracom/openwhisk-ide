@@ -1,6 +1,9 @@
 package wskide
 
 import (
+	"time"
+
+	"github.com/pkg/browser"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
@@ -29,19 +32,17 @@ func debugParse(cmd string) bool {
 
 // Start openwhisk-ide
 func Start(dir string) {
-	var err error
-	err = compareDockerVersion()
-	FatalIf(err)
-	err = inHomePath(dir)
-	FatalIf(err)
-	dockerRunOpenWhisk()
-	dockerRunIde()
+	whiskDeploy()
+	ideDeploy(dir)
+	const url = "http://localhost:3000/"
+	time.Sleep(2 * time.Second)
+	browser.OpenURL(url)
 }
 
 // Stop openwhisk-ide
 func Stop() {
-	dockerRmIde()
-	dockerRmOpenWhisk()
+	ideDestroy()
+	whiskDestroy()
 }
 
 // Main entrypoint for wskide

@@ -15,7 +15,7 @@ var (
 func ideParse(cmd string) bool {
 	switch cmd {
 	case ideDeployCmd.FullCommand():
-		ideDeploy()
+		ideDeploy("project")
 		return true
 	case ideDestroyCmd.FullCommand():
 		ideDestroy()
@@ -24,9 +24,11 @@ func ideParse(cmd string) bool {
 	return false
 }
 
-func ideDeploy() {
+func ideDeploy(dir string) {
 	fmt.Println("Deploying IDE")
-	dockerRunIde()
+	err := inHomePath(dir)
+	FatalIf(err)
+	dockerRunIde(dir)
 }
 
 func ideDestroy() {
