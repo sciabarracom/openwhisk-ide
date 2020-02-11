@@ -86,3 +86,10 @@ func ExampleDryRun() {
 	// ''
 
 }
+
+func ExampleShowError() {
+	ShowError(nil)
+	ShowError(errors.New("error"))
+	// Output:
+	// *** ERROR: error ***
+}

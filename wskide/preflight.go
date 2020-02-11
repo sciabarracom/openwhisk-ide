@@ -1,7 +1,6 @@
 package wskide
 
 import (
-	"errors"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -10,17 +9,20 @@ import (
 	"github.com/mitchellh/go-homedir"
 )
 
-func compareDockerVersion() error {
+func preflightEnsureDockerVersion() error {
 	vA := semver.New(MinDockerVersion)
 	vB := semver.New(strings.TrimSpace(dockerVersion()))
 	if vB.Compare(*vA) == -1 {
-		fmt.Printf("Installed docker version %s is no longer supported", vB)
-		return errors.New("Error")
+		return fmt.Errorf("Installed docker version %s is no longer supported", vB)
 	}
 	return nil
 }
 
-func inHomePath(dir string) error {
+func preflightInHomePath(dir string) error {
+	// do not check if the directory is empty
+	if dir == "" {
+		return nil
+	}
 	homePath, err := homedir.Dir()
 	if err != nil {
 		return err
@@ -30,7 +32,20 @@ func inHomePath(dir string) error {
 		return err
 	}
 	if !strings.HasPrefix(dir, homePath) {
-		return fmt.Errorf("Path %s is not subdir of homeDir %s", dir, homePath)
+		return fmt.Errorf("work directory %s should be under your home directory; this is required to be accessible by Docker", dir)
+	}
+	return nil
+}
+
+// Preflight perform preflight checks
+func Preflight(dir string) error {
+	err := preflightEnsureDockerVersion()
+	if err != nil {
+		return err
+	}
+	err = preflightInHomePath(dir)
+	if err != nil {
+		return err
 	}
 	return nil
 }

@@ -127,3 +127,10 @@ func SysSh(cmd string) string {
 	}
 	return Sys("sh -c", cmd)
 }
+
+// ShowError prints an error if not nil
+func ShowError(err error) {
+	if err != nil {
+		fmt.Printf("*** ERROR: %s ***\n", err)
+	}
+}

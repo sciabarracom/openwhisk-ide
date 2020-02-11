@@ -1,5 +1,1 @@
-openwhisk-ide.code-workspace
-openwhisk-ide
-go.sum
-wskide/go.sum
-*.bak
+node_modules/
